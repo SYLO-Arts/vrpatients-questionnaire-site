@@ -10,7 +10,10 @@
 
   const state = {
     currentStepIdx: 0,
-    steps: [0, 1, 2, 3, 4],   // step ids in active sequence (recomputed when role set)
+    // Step IDs in active sequence. Recomputed when role is set.
+    // 0=intro/personas, 1=details, 2=rankings, 3=role battery, 4=open text, 5=Calendly.
+    // OTHER skips step 3 (role-specific battery).
+    steps: [0, 1, 2, 3, 4, 5],
     role: null,                // 'PM' | 'SALES' | 'CS' | 'OTHER' | null
     skipped: new Set(),
   };
@@ -93,8 +96,8 @@
       });
     });
 
-    // Recompute active step sequence — OTHER skips step 2
-    state.steps = role === 'OTHER' ? [0, 1, 3, 4] : [0, 1, 2, 3, 4];
+    // Recompute active step sequence — OTHER skips the role-specific battery (step 3)
+    state.steps = role === 'OTHER' ? [0, 1, 2, 4, 5] : [0, 1, 2, 3, 4, 5];
 
     // Show/hide S0_03 options — checkboxes for roles NOT chosen in S0_02
     const crossOpts = document.querySelectorAll('#S0_03-options [data-cross-role]');
@@ -372,11 +375,11 @@
       s.hidden = Number(s.dataset.step) !== stepId;
     });
 
-    // Hero only on step 0
+    // Hero (shrunk intro banner) only on step 0 — the "Before you start" page
     hero.hidden = stepId !== 0;
-    // Progress visible after step 0
-    progress.hidden = stepId === 0;
-    // Floating Personas button visible on Sections 1+ (Section 0 has the intro grid)
+    // Progress bar visible from step 0 onward — sets scope expectations early
+    progress.hidden = false;
+    // Floating Personas button visible on steps 1+ (step 0 has the intro grid)
     personasFab.hidden = stepId === 0;
 
     // Nav buttons
@@ -437,6 +440,10 @@
     };
 
     if (stepId === 0) {
+      // Intro/personas page — nothing to validate.
+    }
+
+    else if (stepId === 1) {
       // S0_01 name
       const name = document.getElementById('S0_01');
       errorCheck(name.closest('.field'), name.value.trim().length >= 2, 'Please enter your name (2+ characters).');
@@ -468,7 +475,7 @@
       errorCheck(matrixField, allRowsAnswered, 'Please answer every row before continuing.');
     }
 
-    else if (stepId === 1) {
+    else if (stepId === 2) {
       // S1_01 rank — always populated by widget; verify all 6 personas present and unique
       const order = document.getElementById('S1_01_rank').value.split(',').filter(Boolean);
       const rankOk = order.length === 6 && new Set(order).size === 6;
@@ -494,18 +501,18 @@
       );
     }
 
-    else if (stepId === 2) {
+    else if (stepId === 3) {
       if (state.role === 'SALES') validateSalesBattery(errorCheck);
       else if (state.role === 'CS') validateCsBattery(errorCheck);
       else if (state.role === 'PM') validatePmBattery(errorCheck);
     }
 
-    else if (stepId === 3) {
+    else if (stepId === 4) {
       const ta = document.querySelector('textarea[name="S3_01"]');
       errorCheck(ta.closest('.field'), ta.value.trim().length >= 20, 'Please share at least one phrase (20+ characters).');
     }
 
-    else if (stepId === 4) {
+    else if (stepId === 5) {
       // S4_01 notes are optional — booking happens via Calendly embed,
       // and Calendly bookings are tracked in Calendly's own dashboard.
     }

@@ -22,19 +22,16 @@
     </button>
   </header>
 
-  <!-- Hero — visible only on Section 0 (step 0) -->
+  <!-- Hero — visible only on the "Before you start" intro page (step 0) -->
   <section class="hero" id="hero">
     <div class="hero__inner">
-      <h1 class="hero__title">VRpatients Persona Validation<br><span class="hero__title-accent">Internal Team Input</span></h1>
-      <p class="hero__body">This form captures your direct knowledge about VRpatients' customers, prospects, and market position. It takes 8&ndash;10 minutes. At the end, you'll book a 20-minute follow-up conversation where we dig into your answers. Both parts matter.</p>
-      <div class="hero__rule">
-        <strong>One ground rule:</strong> Leaving a question blank is better than guessing. If you don't have direct knowledge on a question, use the skip button. A confident wrong answer from a small team does more damage than a gap we can name.
-      </div>
+      <h1 class="hero__title">VRpatients Persona Validation &mdash; <span class="hero__title-accent">Internal Team Input</span></h1>
+      <p class="hero__body">8&ndash;10 minutes. At the end, you'll book a 20-minute follow-up. <strong>Leave a question blank rather than guess</strong> &mdash; use the skip button instead. A confident wrong answer does more damage than a gap we can name.</p>
     </div>
   </section>
 
   <!-- Progress bar -->
-  <div class="progress" id="progress" hidden>
+  <div class="progress" id="progress">
     <div class="progress__inner">
       <div class="progress__label" id="progress-label">Step 1 of 5</div>
       <div class="progress__track" id="progress-track" aria-hidden="true"></div>
@@ -66,15 +63,20 @@
       <input type="hidden" name="submitted_at" id="hidden-submitted-at" value="">
 
       <!-- ====================================================
-           SECTION 0 — Intro + Role + Exposure Matrix
+           STEP 0 — Before you start (personas intro)
            ==================================================== -->
       <section class="section" data-step="0" id="section-0">
         <div class="personas-intro">
           <h2 class="section__title">Meet the six personas</h2>
-          <p class="section__intro">These are the customer types every question in this form refers to. Skim them now — they'll be one click away (top-right "Personas" button) on every later page if you need to refresh.</p>
+          <p class="section__intro">These are the customer types every question in this form refers to. Skim them now &mdash; they'll be one click away (top-right "Personas" button) on every later page if you need to refresh.</p>
           <div class="personas-grid" data-personas-slot="intro"></div>
         </div>
+      </section>
 
+      <!-- ====================================================
+           STEP 1 — A few quick details (name + role + matrix)
+           ==================================================== -->
+      <section class="section" data-step="1" id="section-1" hidden>
         <h2 class="section__title">A few quick details</h2>
 
         <!-- S0_01 Name -->
@@ -231,7 +233,7 @@
       <!-- ====================================================
            SECTION 1 — Cross-Role Rankings
            ==================================================== -->
-      <section class="section" data-step="1" id="section-1" hidden>
+      <section class="section" data-step="2" id="section-2" hidden>
         <h2 class="section__title">Cross-role rankings</h2>
         <p class="section__intro">All four are required for every respondent regardless of role. ~2 minutes.</p>
 
@@ -299,7 +301,7 @@
       <!-- ====================================================
            SECTION 2 — Role-specific batteries
            ==================================================== -->
-      <section class="section" data-step="2" id="section-2" hidden>
+      <section class="section" data-step="3" id="section-3" hidden>
         <h2 class="section__title">Your role-specific questions</h2>
         <div class="section__intro">
           <p>The next questions are specific to your role. Answer from direct experience. If a question is outside your knowledge, use the "Skip &mdash; no direct knowledge" button &mdash; don't guess.</p>
@@ -614,7 +616,7 @@
       <!-- ====================================================
            SECTION 3 — Open text catchall
            ==================================================== -->
-      <section class="section" data-step="3" id="section-3" hidden>
+      <section class="section" data-step="4" id="section-4" hidden>
         <h2 class="section__title">Almost done</h2>
         <p class="section__intro">Two open questions &mdash; the first is the single most valuable thing you can contribute. Write what you know, even if it's fragments.</p>
 
@@ -635,7 +637,7 @@
       <!-- ====================================================
            SECTION 4 — Interview booking + submit
            ==================================================== -->
-      <section class="section" data-step="4" id="section-4" hidden>
+      <section class="section" data-step="5" id="section-5" hidden>
         <h2 class="section__title">Last step &mdash; book your interview</h2>
         <p class="section__intro">Based on your answers, we'd like to schedule a 20-minute follow-up. Pick a time below, then hit <strong>Submit</strong> to send your answers.</p>
 
