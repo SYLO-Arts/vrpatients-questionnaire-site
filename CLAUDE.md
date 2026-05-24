@@ -8,30 +8,43 @@ Build-specific guidance for the VRpatients persona questionnaire. This is a subf
 - Hosted on Netlify.
 - Form submissions handled via **Netlify Forms**: the form tag must include `data-netlify="true"` (and a `name` attribute). Netlify intercepts the POST at deploy time.
 
-## Brand reference
+## Brand reference — LOCKED DECISIONS
 
-**Before building, ask Sylo which color scheme to use.** Four named schemes are defined in `brand/visual-direction/working/design-options.md`. The scheme determines all color tokens.
+**Color scheme:** `Reef` (teal accent)
+**Font:** Plus Jakarta Sans (Google Fonts CDN)
+**Design system influence:** IBM Carbon Design System (spacing, component patterns, grid philosophy)
 
-| Scheme | Primary accent | Secondary accent | Background surface |
-|--------|---------------|-----------------|-------------------|
-| **`Legacy`** | `#0C70AE` (blue) | `#6BB544` (green) | white |
-| **`Evergreen`** | `#0052cc` (blue) | `#76b900` (lime green) | `#f4f6f8` |
-| **`Powder`** | `#0052cc` (blue) | `#a8cddf` (powder blue) | `#eef5fa` |
-| **`Reef`** | `#0052cc` (blue) | `#00b8d9` (teal) | `#eaf4ff` |
+All colors use CSS custom properties on `:root` so palette swaps are trivial. See `L5_BUILD_PROMPT.md` for the full token list.
 
-All non-Legacy schemes share Primary Dark `#060d24` for text/headers.
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--color-primary-dark` | `#060d24` | Text, headers, dark backgrounds |
+| `--color-primary-blue` | `#0052cc` | Buttons, progress bar, primary CTAs |
+| `--color-accent` | `#00b8d9` | Teal — interactive highlights, badges, completion |
+| `--color-surface` | `#eaf4ff` | Section backgrounds |
+| `--color-amber` | `#C2410C` | Validation errors |
+| `--color-white` | `#ffffff` | Card backgrounds, primary surfaces |
 
-### Typography
+### Other schemes (for future palette swaps)
 
-**Ask Sylo which font to use.** Four candidates — see `brand/visual-direction/working/design-options.md`. If no direction is locked, default to Arial (Legacy).
+| Scheme | Accent hex | Surface hex |
+|--------|-----------|------------|
+| `Legacy` | `#0C70AE` / `#6BB544` | white |
+| `Evergreen` | `#76b900` | `#f4f6f8` |
+| `Powder` | `#a8cddf` | `#eef5fa` |
 
 ### Confidence-tag color semantics
 
-These map to the active scheme's accent colors:
-- `BEDROCK` → success/green accent (Legacy: `#3F7A1F`, others: scheme's secondary)
-- `CRM-BACKED` → primary blue accent (Legacy: `#0C70AE`, others: `#0052cc`)
-- `ASSUMPTION` → warn amber `#C2410C` (shared across all schemes)
+- `BEDROCK` → `--color-accent` (teal in Reef)
+- `CRM-BACKED` → `--color-primary-blue`
+- `ASSUMPTION` → `--color-amber`
 
-## Workflow expectation
+## Build instructions
 
-Implementation work arrives in a separate prompt later. That prompt expects **plan mode first, then execution**. Do not write HTML/CSS/JS in this scaffolding pass — wait for the L5 implementation prompt.
+The L5 build prompt is in `L5_BUILD_PROMPT.md`. It contains the complete implementation spec including all design direction extracted from Lindsey's reference images. **Read it before writing any code.**
+
+The L4 question spec is at `../L4_QuestionnaireSpec.md` — it is the authoritative source for question text, validation rules, routing logic, and submission data schema.
+
+Reference images are at `../../../visual-direction/working/reference-images/` (1–8.png, A–D.png). Study them — especially `4.png` for UI component structure.
+
+**Plan first, then build.** Present a structural plan before writing HTML/CSS/JS.

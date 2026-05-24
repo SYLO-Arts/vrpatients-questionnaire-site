@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VRpatients Persona Validation — Internal Team Input</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="header">
+    <span class="wordmark">
+      <span class="wordmark__vr">VR</span><span class="wordmark__patients">patients</span>
+    </span>
+  </header>
+
+  <!-- Hero — visible only on Section 0 (step 0) -->
+  <section class="hero" id="hero">
+    <div class="hero__inner">
+      <h1 class="hero__title">VRpatients Persona Validation<br><span class="hero__title-accent">Internal Team Input</span></h1>
+      <p class="hero__body">This form captures your direct knowledge about VRpatients' customers, prospects, and market position. It takes 8&ndash;10 minutes. At the end, you'll book a 20-minute follow-up conversation where we dig into your answers. Both parts matter.</p>
+      <div class="hero__rule">
+        <strong>One ground rule:</strong> Leaving a question blank is better than guessing. If you don't have direct knowledge on a question, use the skip button. A confident wrong answer from a small team does more damage than a gap we can name.
+      </div>
+    </div>
+  </section>
+
+  <!-- Progress bar -->
+  <div class="progress" id="progress" hidden>
+    <div class="progress__inner">
+      <div class="progress__label" id="progress-label">Step 1 of 5</div>
+      <div class="progress__track" id="progress-track" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <main>
+    <form
+      class="card"
+      id="vrp-form"
+      name="vrp-questionnaire"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      novalidate
+    >
+      <!-- Netlify form-name (required) + honeypot -->
+      <input type="hidden" name="form-name" value="vrp-questionnaire">
+      <p class="honeypot">
+        <label>Don't fill this out if you're human: <input name="bot-field"></label>
+      </p>
+
+      <!-- Hidden submission-data fields, updated by JS -->
+      <input type="hidden" name="section2_battery" id="hidden-battery" value="">
+      <input type="hidden" name="primary_role_other" id="hidden-other-role" value="">
+      <input type="hidden" name="skipped_questions" id="hidden-skipped" value="">
+      <input type="hidden" name="pm_skip_alert" id="hidden-pm-alert" value="false">
+      <input type="hidden" name="cs_skip_alert" id="hidden-cs-alert" value="false">
+      <input type="hidden" name="submitted_at" id="hidden-submitted-at" value="">
+
+      <!-- ====================================================
+           SECTION 0 — Intro + Role + Exposure Matrix
+           ==================================================== -->
+      <section class="section" data-step="0" id="section-0">
+        <p class="section__step-label">Section 1 of 5</p>
+        <h2 class="section__title">A few quick details</h2>
+
+        <!-- S0_01 Name -->
+        <div class="field" data-qid="S0_01">
+          <label class="field__label" for="S0_01">Your name</label>
+          <input class="input" type="text" id="S0_01" name="S0_01" required minlength="2" autocomplete="name">
+          <div class="field__error">Please enter your name.</div>
+        </div>
+
+        <!-- S0_02 Role -->
+        <fieldset class="field" data-qid="S0_02">
+          <legend>Which role best describes where you spend most of your time?</legend>
+          <ul class="options">
+            <li><label class="option"><input type="radio" name="S0_02" value="PM" required><span class="option__text">PM &mdash; Product / Engineering</span></label></li>
+            <li><label class="option"><input type="radio" name="S0_02" value="SALES" required><span class="option__text">SALES &mdash; Sales / Business Development</span></label></li>
+            <li><label class="option"><input type="radio" name="S0_02" value="CS" required><span class="option__text">CS &mdash; Customer Success / Support / Onboarding</span></label></li>
+            <li><label class="option"><input type="radio" name="S0_02" value="OTHER" required><span class="option__text">OTHER &mdash; specify below</span></label></li>
+          </ul>
+          <div class="field__error">Please select your primary role.</div>
+
+          <div class="conditional" id="cond-S0_02-other" hidden>
+            <label class="field__label" for="S0_02_other">Your role:</label>
+            <input class="input" type="text" id="S0_02_other" name="S0_02_other" maxlength="100" disabled>
+            <div class="field__error" data-cond-error>Please describe your role (3+ characters).</div>
+          </div>
+        </fieldset>
+
+        <!-- S0_03 Cross-role -->
+        <fieldset class="field" data-qid="S0_03">
+          <legend>Do you also have significant direct knowledge relevant to other roles?</legend>
+          <p class="field__help">Check any that apply &mdash; this helps us route your interview. Optional.</p>
+          <ul class="options" id="S0_03-options">
+            <li><label class="option"><input type="checkbox" name="S0_03_PM" value="PM" data-cross-role="PM"><span class="option__text">PM &mdash; Product / Engineering</span></label></li>
+            <li><label class="option"><input type="checkbox" name="S0_03_SALES" value="SALES" data-cross-role="SALES"><span class="option__text">SALES &mdash; Sales / Business Development</span></label></li>
+            <li><label class="option"><input type="checkbox" name="S0_03_CS" value="CS" data-cross-role="CS"><span class="option__text">CS &mdash; Customer Success / Support / Onboarding</span></label></li>
+          </ul>
+        </fieldset>
+
+        <!-- S0_04 Exposure matrix -->
+        <fieldset class="field" data-qid="S0_04" id="field-S0_04">
+          <legend>How much direct interaction do you have with each of these customer / prospect types?</legend>
+          <p class="field__help">One selection per row. Required.</p>
+
+          <!-- Desktop table -->
+          <table class="matrix matrix-desktop">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="matrix__col">Heavy<br><small>regular, direct</small></th>
+                <th class="matrix__col">Some<br><small>occasional / indirect</small></th>
+                <th class="matrix__col">Little or none</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- 6 persona rows, generated identically -->
+              <tr class="matrix__row">
+                <td class="matrix__row-label"><strong>Tech-Hat Tasha</strong><small>Scenario Author / Sim-Lab Tech</small></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_tasha" value="heavy" aria-label="Tasha: Heavy" required></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_tasha" value="some" aria-label="Tasha: Some"></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_tasha" value="little_or_none" aria-label="Tasha: Little or none"></td>
+              </tr>
+              <tr class="matrix__row">
+                <td class="matrix__row-label"><strong>Pass-Rate Paula</strong><small>Faculty Instructor &mdash; Nursing</small></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_paula" value="heavy" aria-label="Paula: Heavy" required></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_paula" value="some" aria-label="Paula: Some"></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_paula" value="little_or_none" aria-label="Paula: Little or none"></td>
+              </tr>
+              <tr class="matrix__row">
+                <td class="matrix__row-label"><strong>Director Dale</strong><small>Economic Buyer &mdash; EMS / Nursing</small></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_dale" value="heavy" aria-label="Dale: Heavy" required></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_dale" value="some" aria-label="Dale: Some"></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_dale" value="little_or_none" aria-label="Dale: Little or none"></td>
+              </tr>
+              <tr class="matrix__row">
+                <td class="matrix__row-label"><strong>Care-Plan Carla</strong><small>Nursing Student Learner</small></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_carla" value="heavy" aria-label="Carla: Heavy" required></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_carla" value="some" aria-label="Carla: Some"></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_carla" value="little_or_none" aria-label="Carla: Little or none"></td>
+              </tr>
+              <tr class="matrix__row">
+                <td class="matrix__row-label"><strong>Recert-Clock Riley</strong><small>EMS Professional Learner</small></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_riley" value="heavy" aria-label="Riley: Heavy" required></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_riley" value="some" aria-label="Riley: Some"></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_riley" value="little_or_none" aria-label="Riley: Little or none"></td>
+              </tr>
+              <tr class="matrix__row">
+                <td class="matrix__row-label"><strong>Ghosting Greg</strong><small>Skeptic / Non-Buyer</small></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_greg" value="heavy" aria-label="Greg: Heavy" required></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_greg" value="some" aria-label="Greg: Some"></td>
+                <td class="matrix__cell"><input type="radio" name="S0_04_greg" value="little_or_none" aria-label="Greg: Little or none"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Mobile stacked variant -->
+          <div class="matrix-mobile" aria-hidden="false">
+            <!-- The mobile variant uses the SAME input names so only one set of values submits.
+                 Desktop/mobile visibility is mutually exclusive via CSS. -->
+            <!-- Tasha -->
+            <fieldset>
+              <legend>Tech-Hat Tasha <small>Scenario Author / Sim-Lab Tech</small></legend>
+              <div class="matrix-mobile__opts">
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_tasha_m" value="heavy"> Heavy &mdash; regular, direct</label>
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_tasha_m" value="some"> Some &mdash; occasional or indirect</label>
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_tasha_m" value="little_or_none"> Little or none</label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Pass-Rate Paula <small>Faculty Instructor &mdash; Nursing</small></legend>
+              <div class="matrix-mobile__opts">
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_paula_m" value="heavy"> Heavy</label>
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_paula_m" value="some"> Some</label>
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_paula_m" value="little_or_none"> Little or none</label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Director Dale <small>Economic Buyer &mdash; EMS / Nursing</small></legend>
+              <div class="matrix-mobile__opts">
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_dale_m" value="heavy"> Heavy</label>
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_dale_m" value="some"> Some</label>
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_dale_m" value="little_or_none"> Little or none</label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Care-Plan Carla <small>Nursing Student Learner</small></legend>
+              <div class="matrix-mobile__opts">
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_carla_m" value="heavy"> Heavy</label>
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_carla_m" value="some"> Some</label>
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_carla_m" value="little_or_none"> Little or none</label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Recert-Clock Riley <small>EMS Professional Learner</small></legend>
+              <div class="matrix-mobile__opts">
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_riley_m" value="heavy"> Heavy</label>
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_riley_m" value="some"> Some</label>
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_riley_m" value="little_or_none"> Little or none</label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Ghosting Greg <small>Skeptic / Non-Buyer</small></legend>
+              <div class="matrix-mobile__opts">
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_greg_m" value="heavy"> Heavy</label>
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_greg_m" value="some"> Some</label>
+                <label class="matrix-mobile__opt"><input type="radio" name="S0_04_greg_m" value="little_or_none"> Little or none</label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="field__error">Please answer every row before continuing.</div>
+        </fieldset>
+      </section>
+
+      <!-- ====================================================
+           SECTION 1 — Cross-Role Rankings
+           ==================================================== -->
+      <section class="section" data-step="1" id="section-1" hidden>
+        <p class="section__step-label">Section 2 of 5</p>
+        <h2 class="section__title">Cross-role rankings</h2>
+        <p class="section__intro">All four are required for every respondent regardless of role. ~2 minutes.</p>
+
+        <!-- S1_01 Forced rank -->
+        <fieldset class="field" data-qid="S1_01" id="field-S1_01">
+          <legend>Rank these six personas from 1 (most critical to VRpatients' revenue growth in the next 12 months) to 6 (least critical).</legend>
+          <p class="rank__help">Drag a row up or down to reorder. Or press Tab to focus a row, then use &uarr; / &darr; to move it.</p>
+
+          <ol class="rank" id="rank-list" role="listbox" aria-label="Persona ranking">
+            <li class="rank__item" tabindex="0" data-persona="tasha"><span class="rank__num">1</span><span class="rank__label">Tech-Hat Tasha</span><span class="rank__handle" aria-hidden="true">&#9776;</span></li>
+            <li class="rank__item" tabindex="0" data-persona="paula"><span class="rank__num">2</span><span class="rank__label">Pass-Rate Paula</span><span class="rank__handle" aria-hidden="true">&#9776;</span></li>
+            <li class="rank__item" tabindex="0" data-persona="dale"><span class="rank__num">3</span><span class="rank__label">Director Dale</span><span class="rank__handle" aria-hidden="true">&#9776;</span></li>
+            <li class="rank__item" tabindex="0" data-persona="carla"><span class="rank__num">4</span><span class="rank__label">Care-Plan Carla</span><span class="rank__handle" aria-hidden="true">&#9776;</span></li>
+            <li class="rank__item" tabindex="0" data-persona="riley"><span class="rank__num">5</span><span class="rank__label">Recert-Clock Riley</span><span class="rank__handle" aria-hidden="true">&#9776;</span></li>
+            <li class="rank__item" tabindex="0" data-persona="greg"><span class="rank__num">6</span><span class="rank__label">Ghosting Greg</span><span class="rank__handle" aria-hidden="true">&#9776;</span></li>
+          </ol>
+          <!-- Stored as a comma-joined ordered list of persona slugs -->
+          <input type="hidden" name="S1_01_rank" id="S1_01_rank" value="">
+        </fieldset>
+
+        <!-- S1_02 Renewal driver -->
+        <fieldset class="field" data-qid="S1_02">
+          <legend>Which ONE persona's engagement or disengagement most determines whether accounts renew?</legend>
+          <ul class="options">
+            <li><label class="option"><input type="radio" name="S1_02" value="tasha" required><span class="option__text">Tech-Hat Tasha</span></label></li>
+            <li><label class="option"><input type="radio" name="S1_02" value="paula" required><span class="option__text">Pass-Rate Paula</span></label></li>
+            <li><label class="option"><input type="radio" name="S1_02" value="dale" required><span class="option__text">Director Dale</span></label></li>
+            <li><label class="option"><input type="radio" name="S1_02" value="carla" required><span class="option__text">Care-Plan Carla</span></label></li>
+            <li><label class="option"><input type="radio" name="S1_02" value="riley" required><span class="option__text">Recert-Clock Riley</span></label></li>
+            <li><label class="option"><input type="radio" name="S1_02" value="greg" required><span class="option__text">Ghosting Greg</span></label></li>
+          </ul>
+          <div class="field__error">Please choose one.</div>
+        </fieldset>
+
+        <!-- S1_03 Skeptic resolution -->
+        <fieldset class="field" data-qid="S1_03">
+          <legend>The persona slate includes a "Skeptic" non-buyer (Ghosting Greg). In your experience, is the skeptic / non-buyer:</legend>
+          <ul class="options">
+            <li><label class="option"><input type="radio" name="S1_03" value="a" required data-conditional="cond-S1_03-title"><span class="option__text">A specific, identifiable person with a consistent title or role who blocks deals</span></label></li>
+            <li><label class="option"><input type="radio" name="S1_03" value="b" required><span class="option__text">A stance that buyers in other persona categories sometimes adopt during evaluation</span></label></li>
+            <li><label class="option"><input type="radio" name="S1_03" value="c" required><span class="option__text">Not a useful category &mdash; deals die for structural reasons (budget, timing, fit), not because of a "skeptic"</span></label></li>
+          </ul>
+          <div class="field__error">Please choose one.</div>
+
+          <div class="conditional" id="cond-S1_03-title" hidden>
+            <label class="field__label" for="S1_03_title">What's the typical title or role? <span class="field__help" style="display:inline; margin:0;">(optional)</span></label>
+            <input class="input" type="text" id="S1_03_title" name="S1_03_title" maxlength="100" disabled>
+          </div>
+        </fieldset>
+
+        <!-- S1_04 Authoring temperature -->
+        <fieldset class="field" data-qid="S1_04">
+          <legend>How do prospects and customers experience the authoring tool?</legend>
+          <ul class="options">
+            <li><label class="option"><input type="radio" name="S1_04" value="a" required><span class="option__text">It's our strongest differentiator &mdash; wins deals</span></label></li>
+            <li><label class="option"><input type="radio" name="S1_04" value="b" required><span class="option__text">It sells well but requires meaningful onboarding support</span></label></li>
+            <li><label class="option"><input type="radio" name="S1_04" value="c" required><span class="option__text">Neutral &mdash; not a significant factor either way</span></label></li>
+            <li><label class="option"><input type="radio" name="S1_04" value="d" required><span class="option__text">It creates friction that sometimes costs us deals</span></label></li>
+            <li><label class="option"><input type="radio" name="S1_04" value="e" required><span class="option__text">It's a net negative &mdash; we lose more deals because of it than we win</span></label></li>
+          </ul>
+          <div class="field__error">Please choose one.</div>
+        </fieldset>
+      </section>
+
+      <!-- ====================================================
+           SECTION 2 — Role-specific batteries
+           ==================================================== -->
+      <section class="section" data-step="2" id="section-2" hidden>
+        <p class="section__step-label">Section 3 of 5</p>
+        <h2 class="section__title">Your role-specific questions</h2>
+        <div class="section__intro">
+          <p>The next questions are specific to your role. Answer from direct experience. If a question is outside your knowledge, use the "Skip &mdash; no direct knowledge" button &mdash; don't guess.</p>
+          <p>For text answers: <em>optionally tag your source &mdash; <strong>D</strong> = direct from a customer, <strong>I</strong> = indirect from a colleague, <strong>G</strong> = gut / experience.</em></p>
+        </div>
+
+        <!-- ================ SALES BATTERY ================ -->
+        <div class="battery" data-battery="SALES" hidden>
+
+          <!-- S2_SALES_01 -->
+          <fieldset class="field" data-qid="S2_SALES_01">
+            <legend>Nursing closes at roughly half the EMS rate on decided deals. What do you think is the dominant cause?</legend>
+            <p class="field__help">Pick up to 2.</p>
+            <ul class="options">
+              <li><label class="option"><input type="checkbox" name="S2_SALES_01" value="a"><span class="option__text">Missing content depth (peds, OB, specialty nursing scenarios)</span></label></li>
+              <li><label class="option"><input type="checkbox" name="S2_SALES_01" value="b"><span class="option__text">Authoring tool friction hits harder on nursing buyers who lack a dedicated sim tech</span></label></li>
+              <li><label class="option"><input type="checkbox" name="S2_SALES_01" value="c"><span class="option__text">Longer procurement / approval chain at nursing programs</span></label></li>
+              <li><label class="option"><input type="checkbox" name="S2_SALES_01" value="d"><span class="option__text">Pricing mismatch for nursing program budget cycles</span></label></li>
+              <li><label class="option"><input type="checkbox" name="S2_SALES_01" value="e"><span class="option__text">Our sales motion is tuned for EMS language, not nursing buyer language</span></label></li>
+              <li><label class="option"><input type="checkbox" name="S2_SALES_01" value="f"><span class="option__text">Competitor strength on the nursing side (UbiSim, SimX/WK bundle)</span></label></li>
+              <li><label class="option"><input type="checkbox" name="S2_SALES_01" value="g" data-conditional="cond-S2_SALES_01-other"><span class="option__text">Other</span></label></li>
+            </ul>
+            <div class="field__error">Pick 1&ndash;2 options.</div>
+            <div class="conditional" id="cond-S2_SALES_01-other" hidden>
+              <label class="field__label" for="S2_SALES_01_other">Describe:</label>
+              <input class="input" type="text" id="S2_SALES_01_other" name="S2_SALES_01_other" maxlength="200" disabled>
+            </div>
+          </fieldset>
+
+          <!-- S2_SALES_02 -->
+          <fieldset class="field" data-qid="S2_SALES_02">
+            <legend>When you tag "Limited Budget" on a lost deal, what's the most common underlying reality?</legend>
+            <ul class="options">
+              <li><label class="option"><input type="radio" name="S2_SALES_02" value="a"><span class="option__text">Genuinely no money in this fiscal cycle</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_02" value="b"><span class="option__text">Money exists but earmarked for something else</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_02" value="c"><span class="option__text">Champion couldn't get internal sign-off above them</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_02" value="d"><span class="option__text">We were outpriced by a cheaper or differently-priced alternative</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_02" value="e" data-conditional="cond-S2_SALES_02-real"><span class="option__text">Polite no &mdash; the real reason is something else entirely</span></label></li>
+            </ul>
+            <div class="field__error">Please choose one.</div>
+            <div class="conditional" id="cond-S2_SALES_02-real" hidden>
+              <label class="field__label" for="S2_SALES_02_real">What's the real reason usually?</label>
+              <input class="input" type="text" id="S2_SALES_02_real" name="S2_SALES_02_real" maxlength="200" disabled>
+            </div>
+          </fieldset>
+
+          <!-- S2_SALES_03 -->
+          <fieldset class="field" data-qid="S2_SALES_03">
+            <legend>Think of your recent "No Response" losses. At what stage did they most commonly go silent?</legend>
+            <ul class="options">
+              <li><label class="option"><input type="radio" name="S2_SALES_03" value="a"><span class="option__text">Never engaged after initial outreach</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_03" value="b"><span class="option__text">After first call / discovery</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_03" value="c"><span class="option__text">After demo</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_03" value="d"><span class="option__text">After quote or proposal sent</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_03" value="e"><span class="option__text">After verbal agreement or PO request</span></label></li>
+            </ul>
+            <div class="field__error">Please choose one.</div>
+            <div class="append">
+              <label class="field__label" for="S2_SALES_03_pattern">Any pattern in what they saw or heard right before going silent?</label>
+              <p class="field__help">Optionally tag your source: <strong>D</strong>/<strong>I</strong>/<strong>G</strong>.</p>
+              <textarea class="textarea" id="S2_SALES_03_pattern" name="S2_SALES_03_pattern" rows="3" maxlength="300"></textarea>
+            </div>
+          </fieldset>
+
+          <!-- S2_SALES_04 (skip-permitted) -->
+          <fieldset class="field" data-qid="S2_SALES_04" data-skip="true">
+            <legend>When a prospect cites "no pediatrics" as an objection, how often is peds the actual deal-killing issue vs. a stand-in for deeper objections?</legend>
+            <ul class="options">
+              <li><label class="option"><input type="radio" name="S2_SALES_04" value="a"><span class="option__text">Almost always the real blocker &mdash; peds MVP will fix most of these</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_04" value="b"><span class="option__text">Mostly real, but sometimes masks a deeper objection</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_04" value="c"><span class="option__text">About 50/50 &mdash; real half the time, proxy half the time</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_04" value="d"><span class="option__text">Mostly a proxy &mdash; peds is the stated reason, not the real one</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_04" value="e"><span class="option__text">Almost always a proxy for something else</span></label></li>
+            </ul>
+            <div class="field__error">Please choose one or use the skip button.</div>
+            <div class="append">
+              <label class="field__label" for="S2_SALES_04_proxy">When it's a proxy, what's the real issue usually?</label>
+              <p class="field__help">Optionally tag your source: <strong>D</strong>/<strong>I</strong>/<strong>G</strong>.</p>
+              <textarea class="textarea" id="S2_SALES_04_proxy" name="S2_SALES_04_proxy" rows="3" maxlength="200"></textarea>
+            </div>
+            <div class="skip-row">
+              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
+              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+            </div>
+          </fieldset>
+
+          <!-- S2_SALES_05 (skip-permitted) -->
+          <fieldset class="field" data-qid="S2_SALES_05" data-skip="true">
+            <legend>How often do nursing prospects use NCLEX, Next Gen NCLEX, clinical judgment, or NCSBN language on sales calls?</legend>
+            <ul class="options">
+              <li><label class="option"><input type="radio" name="S2_SALES_05" value="a"><span class="option__text">Frequently &mdash; it's a primary buying motivation</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_05" value="b"><span class="option__text">Sometimes &mdash; comes up but isn't the main driver</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_05" value="c"><span class="option__text">Rarely &mdash; maybe heard it once or twice</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_05" value="d"><span class="option__text">Never heard it on a call</span></label></li>
+            </ul>
+            <div class="field__error">Please choose one or use the skip button.</div>
+            <div class="skip-row">
+              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
+              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+            </div>
+          </fieldset>
+
+          <!-- S2_SALES_06 (skip-permitted) -->
+          <fieldset class="field" data-qid="S2_SALES_06" data-skip="true">
+            <legend>In the last 12 months, which competitor have you most often lost to or heard named by prospects?</legend>
+            <ul class="options">
+              <li><label class="option"><input type="radio" name="S2_SALES_06" value="a"><span class="option__text">SimX</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_06" value="b"><span class="option__text">UbiSim</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_06" value="c"><span class="option__text">Laerdal (SimMan, LLEAP, vSim)</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_06" value="d"><span class="option__text">CAE Healthcare</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_06" value="e"><span class="option__text">Shadow Health</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_06" value="f" data-conditional="cond-S2_SALES_06-other"><span class="option__text">Other</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_SALES_06" value="g"><span class="option__text">No named competitor &mdash; deals die for non-competitive reasons</span></label></li>
+            </ul>
+            <div class="field__error">Please choose one or use the skip button.</div>
+            <div class="conditional" id="cond-S2_SALES_06-other" hidden>
+              <label class="field__label" for="S2_SALES_06_other">Name:</label>
+              <input class="input" type="text" id="S2_SALES_06_other" name="S2_SALES_06_other" maxlength="100" disabled>
+            </div>
+            <div class="append">
+              <label class="field__label" for="S2_SALES_06_why">What specifically does the competitor win on?</label>
+              <p class="field__help">Optionally tag your source: <strong>D</strong>/<strong>I</strong>/<strong>G</strong>.</p>
+              <textarea class="textarea" id="S2_SALES_06_why" name="S2_SALES_06_why" rows="3" maxlength="200"></textarea>
+            </div>
+            <div class="skip-row">
+              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
+              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+            </div>
+          </fieldset>
+
+        </div><!-- /SALES battery -->
+
+        <!-- ================ CS BATTERY ================ -->
+        <div class="battery" data-battery="CS" hidden>
+
+          <!-- S2_CS_01 -->
+          <fieldset class="field" data-qid="S2_CS_01">
+            <legend>Of accounts that didn't renew in the last 12 months, roughly what fraction match the pattern "bought it, never really deployed it, let it lapse"?</legend>
+            <ul class="options">
+              <li><label class="option"><input type="radio" name="S2_CS_01" value="a"><span class="option__text">Under 10% &mdash; rare</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_01" value="b"><span class="option__text">10&ndash;25%</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_01" value="c"><span class="option__text">25&ndash;50%</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_01" value="d"><span class="option__text">50&ndash;75%</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_01" value="e"><span class="option__text">Over 75% &mdash; most non-renewals</span></label></li>
+            </ul>
+            <div class="field__error">Please choose one.</div>
+            <div class="append">
+              <label class="field__label" for="S2_CS_01_story">What's the typical story behind these?</label>
+              <p class="field__help">Optionally tag your source: <strong>D</strong>/<strong>I</strong>/<strong>G</strong>.</p>
+              <textarea class="textarea" id="S2_CS_01_story" name="S2_CS_01_story" rows="3" maxlength="300"></textarea>
+            </div>
+          </fieldset>
+
+          <!-- S2_CS_02 -->
+          <fieldset class="field" data-qid="S2_CS_02">
+            <legend>When an account successfully renews, what's the primary driver?</legend>
+            <ul class="options">
+              <li><label class="option"><input type="radio" name="S2_CS_02" value="a"><span class="option__text">Active instructor / faculty usage in classes</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_02" value="b"><span class="option__text">Administrator sees strong utilization data</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_02" value="c"><span class="option__text">VRpatients CS relationship</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_02" value="d"><span class="option__text">Sunk cost / inertia / path of least resistance</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_02" value="e"><span class="option__text">No viable alternative they'd switch to</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_02" value="f" data-conditional="cond-S2_CS_02-other"><span class="option__text">Other</span></label></li>
+            </ul>
+            <div class="field__error">Please choose one.</div>
+            <div class="conditional" id="cond-S2_CS_02-other" hidden>
+              <label class="field__label" for="S2_CS_02_other">Describe:</label>
+              <input class="input" type="text" id="S2_CS_02_other" name="S2_CS_02_other" maxlength="200" disabled>
+            </div>
+          </fieldset>
+
+          <!-- S2_CS_03 -->
+          <fieldset class="field" data-qid="S2_CS_03">
+            <legend>In accounts that didn't renew, how often was the original champion (the person who drove the purchase) still in their role at renewal time?</legend>
+            <ul class="options">
+              <li><label class="option"><input type="radio" name="S2_CS_03" value="a"><span class="option__text">Usually still there but had stopped using the platform</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_03" value="b"><span class="option__text">Usually had left the institution</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_03" value="c"><span class="option__text">Usually still there and using it, but someone above killed the line item</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_03" value="d"><span class="option__text">Mixed &mdash; no clear pattern</span></label></li>
+            </ul>
+            <div class="field__error">Please choose one.</div>
+            <div class="append">
+              <label class="field__label" for="S2_CS_03_aftermath">When the champion left, what typically happened to the account?</label>
+              <p class="field__help">Optionally tag your source: <strong>D</strong>/<strong>I</strong>/<strong>G</strong>.</p>
+              <textarea class="textarea" id="S2_CS_03_aftermath" name="S2_CS_03_aftermath" rows="3" maxlength="300"></textarea>
+            </div>
+          </fieldset>
+
+          <!-- S2_CS_04 (skip-permitted) -->
+          <fieldset class="field" data-qid="S2_CS_04" data-skip="true">
+            <legend>In accounts that successfully renewed, how many typically had two or more engaged internal users vs. a single champion?</legend>
+            <ul class="options">
+              <li><label class="option"><input type="radio" name="S2_CS_04" value="a"><span class="option__text">Almost always 2+ engaged users</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_04" value="b"><span class="option__text">About half the time</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_04" value="c"><span class="option__text">Usually just one person carrying it</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_CS_04" value="d"><span class="option__text">Don't have visibility on this</span></label></li>
+            </ul>
+            <div class="field__error">Please choose one or use the skip button.</div>
+            <div class="skip-row">
+              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
+              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+            </div>
+          </fieldset>
+
+          <!-- S2_CS_05 (skip-permitted) -->
+          <fieldset class="field" data-qid="S2_CS_05" data-skip="true">
+            <legend>In well-functioning accounts, what does the first student or medic headset session typically look like? Is there a pre-brief, expectation-setting, a fallback option for non-VR?</legend>
+            <p class="field__help">Optionally tag your source: <strong>D</strong>/<strong>I</strong>/<strong>G</strong>. Min 20 characters.</p>
+            <textarea class="textarea" name="S2_CS_05" rows="5"></textarea>
+            <div class="field__error">Please answer (20+ characters) or use the skip button.</div>
+            <div class="skip-row">
+              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
+              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+            </div>
+          </fieldset>
+
+          <!-- S2_CS_06 (skip-permitted) -->
+          <fieldset class="field" data-qid="S2_CS_06" data-skip="true">
+            <legend>What words do students or medics actually use to describe their VRpatients experience &mdash; positive or negative? Give us their exact phrases if you can remember any.</legend>
+            <p class="field__help">Optionally tag your source: <strong>D</strong>/<strong>I</strong>/<strong>G</strong>. Min 20 characters.</p>
+            <textarea class="textarea" name="S2_CS_06" rows="5"></textarea>
+            <div class="field__error">Please answer (20+ characters) or use the skip button.</div>
+            <div class="skip-row">
+              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
+              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+            </div>
+          </fieldset>
+
+        </div><!-- /CS battery -->
+
+        <!-- ================ PM BATTERY ================ -->
+        <div class="battery" data-battery="PM" hidden>
+
+          <!-- S2_PM_01 -->
+          <fieldset class="field" data-qid="S2_PM_01">
+            <legend>Does VRpatients (or Virtual Education Systems) currently hold CAPCE provider accreditation?</legend>
+            <ul class="options">
+              <li><label class="option"><input type="radio" name="S2_PM_01" value="a" data-conditional="cond-S2_PM_01-desig"><span class="option__text">Yes</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_PM_01" value="b" data-conditional="cond-S2_PM_01-target"><span class="option__text">No &mdash; it's on the roadmap</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_PM_01" value="c"><span class="option__text">No &mdash; not currently planned</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_PM_01" value="d"><span class="option__text">I don't know</span></label></li>
+            </ul>
+            <div class="field__error">Please choose one.</div>
+            <div class="conditional" id="cond-S2_PM_01-desig" hidden>
+              <label class="field__label" for="S2_PM_01_desig">Designation (F1 / F2 / F3 / F5):</label>
+              <input class="input" type="text" id="S2_PM_01_desig" name="S2_PM_01_desig" maxlength="20" disabled>
+            </div>
+            <div class="conditional" id="cond-S2_PM_01-target" hidden>
+              <label class="field__label" for="S2_PM_01_target">Target date:</label>
+              <input class="input" type="text" id="S2_PM_01_target" name="S2_PM_01_target" maxlength="50" disabled>
+            </div>
+          </fieldset>
+
+          <!-- S2_PM_02 -->
+          <fieldset class="field" data-qid="S2_PM_02">
+            <legend>Has anyone internally measured the time from blank canvas to a deployed, tested scenario for a first-time faculty user with no prior VRpatients experience?</legend>
+            <p class="field__help">Fill at least one of the two. Optionally tag your source: <strong>D</strong>/<strong>I</strong>/<strong>G</strong>.</p>
+            <div class="append">
+              <label class="field__label" for="S2_PM_02_measured">If measured, what's the number?</label>
+              <input class="input" type="text" id="S2_PM_02_measured" name="S2_PM_02_measured" maxlength="100">
+            </div>
+            <div class="append">
+              <label class="field__label" for="S2_PM_02_estimate">If not measured, what's your best engineering estimate?</label>
+              <input class="input" type="text" id="S2_PM_02_estimate" name="S2_PM_02_estimate" maxlength="100">
+            </div>
+            <div class="field__error">Please fill at least one of the two fields (3+ characters).</div>
+          </fieldset>
+
+          <!-- S2_PM_03 (skip-permitted) -->
+          <fieldset class="field" data-qid="S2_PM_03" data-skip="true">
+            <legend>The peds MVP is in testing on 8&ndash;12yo avatars. Two questions: (a) What scenario types does it include &mdash; assessment only, or also peds arrest, respiratory, anaphylaxis, etc.? (b) Projected ship date?</legend>
+            <p class="field__help">Optionally tag your source: <strong>D</strong>/<strong>I</strong>/<strong>G</strong>. Min 15 characters.</p>
+            <textarea class="textarea" name="S2_PM_03" rows="5"></textarea>
+            <div class="field__error">Please answer (15+ characters) or use the skip button.</div>
+            <div class="skip-row">
+              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
+              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+            </div>
+          </fieldset>
+
+          <!-- S2_PM_04 (skip-permitted) -->
+          <fieldset class="field" data-qid="S2_PM_04" data-skip="true">
+            <legend>Is multi-user / multiplayer simulation on the product roadmap? If yes, what's the realistic timeline and scope?</legend>
+            <p class="field__help">Optionally tag your source: <strong>D</strong>/<strong>I</strong>/<strong>G</strong>. Min 10 characters.</p>
+            <textarea class="textarea" name="S2_PM_04" rows="4"></textarea>
+            <div class="field__error">Please answer (10+ characters) or use the skip button.</div>
+            <div class="skip-row">
+              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
+              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+            </div>
+          </fieldset>
+
+          <!-- S2_PM_05 (skip-permitted) -->
+          <fieldset class="field" data-qid="S2_PM_05" data-skip="true">
+            <legend>Does the WebGL / non-headset version cover the same scenario library as the VR headset version?</legend>
+            <ul class="options">
+              <li><label class="option"><input type="radio" name="S2_PM_05" value="a"><span class="option__text">Full parity &mdash; same scenarios, same assessments</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_PM_05" value="b"><span class="option__text">Mostly &mdash; some gaps</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_PM_05" value="c"><span class="option__text">Significantly stripped &mdash; subset only</span></label></li>
+              <li><label class="option"><input type="radio" name="S2_PM_05" value="d"><span class="option__text">Don't know the current state</span></label></li>
+            </ul>
+            <div class="field__error">Please choose one or use the skip button.</div>
+            <div class="skip-row">
+              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
+              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+            </div>
+          </fieldset>
+
+        </div><!-- /PM battery -->
+      </section>
+
+      <!-- ====================================================
+           SECTION 3 — Open text catchall
+           ==================================================== -->
+      <section class="section" data-step="3" id="section-3" hidden>
+        <p class="section__step-label">Section 4 of 5</p>
+        <h2 class="section__title">Almost done</h2>
+        <p class="section__intro">Two open questions &mdash; the first is the single most valuable thing you can contribute. Write what you know, even if it's fragments.</p>
+
+        <fieldset class="field" data-qid="S3_01">
+          <legend>What phrases or sentences do customers actually use to describe VRpatients &mdash; positive or negative?</legend>
+          <p class="field__help">We want their exact words, not paraphrases. Even fragments help. Optionally tag your source: <strong>D</strong>/<strong>I</strong>/<strong>G</strong>. Min 20 characters.</p>
+          <textarea class="textarea" name="S3_01" rows="7" required minlength="20"></textarea>
+          <div class="field__error">Please share at least one phrase (20+ characters).</div>
+        </fieldset>
+
+        <fieldset class="field" data-qid="S3_02">
+          <legend>What's the single most important thing about our customers or competitive position that you believe the rest of the team doesn't fully appreciate?</legend>
+          <p class="field__help">Optional. Optionally tag your source: <strong>D</strong>/<strong>I</strong>/<strong>G</strong>.</p>
+          <textarea class="textarea" name="S3_02" rows="5"></textarea>
+        </fieldset>
+      </section>
+
+      <!-- ====================================================
+           SECTION 4 — Interview booking + submit
+           ==================================================== -->
+      <section class="section" data-step="4" id="section-4" hidden>
+        <p class="section__step-label">Section 5 of 5</p>
+        <h2 class="section__title">Last step &mdash; book your interview</h2>
+        <p class="section__intro">Based on your answers, we'd like to schedule a 20-minute follow-up. Pick a time below, then hit <strong>Submit</strong> to send your answers.</p>
+
+        <!-- Calendly inline embed.
+             TODO: replace data-url with your real Calendly event link
+             (e.g. https://calendly.com/sylo-vrpatients/vrp-interview-20min).
+             The script tag below loads Calendly's widget library lazily. -->
+        <div class="calendly-wrapper">
+          <div
+            class="calendly-inline-widget"
+            data-url="https://calendly.com/YOUR-HANDLE/vrp-interview?hide_event_type_details=1&amp;hide_gdpr_banner=1"
+            style="min-width:320px;height:680px;"
+          ></div>
+          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+        </div>
+
+        <fieldset class="field" data-qid="S4_01">
+          <legend>Anything we should know about scheduling? <span class="field__help" style="display:inline; margin:0; font-weight:400;">(optional)</span></legend>
+          <p class="field__help">If none of the slots work, or you'd prefer phone over video, tell us here.</p>
+          <textarea class="textarea" name="S4_01" rows="3" placeholder="e.g., 'I'd prefer a phone call' or 'I have meetings not yet on my calendar Tues 2-4pm'"></textarea>
+        </fieldset>
+      </section>
+
+      <!-- Navigation -->
+      <div class="nav" id="form-nav">
+        <button type="button" class="btn btn--secondary" id="btn-back" hidden>&larr; Back</button>
+        <button type="button" class="btn btn--primary" id="btn-next">Next &rarr;</button>
+        <button type="submit" class="btn btn--primary" id="btn-submit" hidden>Submit &amp; book interview</button>
+      </div>
+    </form>
+
+    <!-- Confirmation panel (revealed on successful submit) -->
+    <section class="confirmation" id="confirmation" hidden aria-live="polite">
+      <span class="confirmation__badge">&#10003; Submitted</span>
+      <h2 class="confirmation__title">Thank you.</h2>
+      <p class="confirmation__body">Your answers are recorded. Sylo will reach out to book your 20-minute follow-up based on your availability. If you think of anything else, reply to the original message that sent you here.</p>
+      <div class="confirmation__wordmark">
+        <span class="wordmark"><span class="wordmark__vr">VR</span><span class="wordmark__patients">patients</span></span>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
