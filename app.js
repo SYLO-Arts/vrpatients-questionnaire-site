@@ -599,7 +599,7 @@
       } else {
         btnSubmit.disabled = false;
         btnSubmit.textContent = 'Submit & book interview';
-        alert('Submission failed. Please try again or contact Sylo directly.');
+        alert('Submission failed. Please try again or contact Anthony directly.');
       }
     }
   });

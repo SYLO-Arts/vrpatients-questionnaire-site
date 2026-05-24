@@ -76,7 +76,7 @@ https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;
 
 Study all 12 reference images in `../../../visual-direction/working/reference-images/`. The key takeaways for this build:
 
-**From image 4 (Sylo's favorite) — UI component structure:**
+**From image 4 (Anthony's favorite) — UI component structure:**
 - Dark navy (`--color-primary-dark`) for the page header/nav area
 - White cards on the light surface background for form sections
 - Accent color (teal in Reef) for interactive highlights, badges, active states
@@ -293,7 +293,7 @@ Questions: S2_PM_01 through S2_PM_05
 **S4_02 — Submit**
 - Button: "Submit & book interview"
 - On success, render confirmation inline (don't redirect):
-  > "Thank you. Your answers are recorded. Sylo will reach out to book your 20-minute follow-up based on your availability. If you think of anything else, reply to the original message that sent you here."
+  > "Thank you. Your answers are recorded. Anthony will reach out to book your 20-minute follow-up based on your availability. If you think of anything else, reply to the original message that sent you here."
 - Confirmation area uses accent color and primary blue for visual confirmation
 
 ---
