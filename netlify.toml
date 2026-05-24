@@ -1,0 +1,5 @@
+# Netlify config — static site, no build step.
+# Forms are enabled per-form via data-netlify="true" on the <form> tag.
+
+[build]
+  publish = "."
