@@ -126,6 +126,30 @@ a {
   height: var(--header-height);
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.header__personas-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: transparent;
+  color: var(--color-text-on-dark);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.header__personas-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 .wordmark {
@@ -785,6 +809,206 @@ fieldset.field:first-of-type {
   color: var(--color-primary-blue);
   border: none;
   padding: 8px 12px;
+}
+
+/* =============================================================
+   Personas — intro block, grid, cards, modal, floating button
+   ============================================================= */
+
+.personas-intro {
+  margin-bottom: var(--sp-6);
+  padding-bottom: var(--sp-5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.personas-grid {
+  margin-top: var(--sp-4);
+}
+
+.personas-grid__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--sp-4);
+}
+
+.persona-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-2);
+  box-shadow: 0 1px 2px rgba(6, 13, 36, 0.04);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.persona-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(6, 13, 36, 0.08);
+}
+
+.persona-card__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background: var(--color-section-bg);
+  /* Slight bevel — soft rounded corners on all four sides of the image */
+  border-radius: 12px;
+}
+
+.persona-card__body {
+  padding: 0 var(--sp-2) var(--sp-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.persona-card__name {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin: 0;
+  line-height: var(--lh-snug);
+}
+
+.persona-card__role {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.persona-card__buying {
+  font-size: var(--fs-xs);
+  color: var(--color-text-secondary);
+  line-height: var(--lh-snug);
+  margin: 0;
+  padding: var(--sp-1) var(--sp-2);
+  background: var(--color-section-bg);
+  border-radius: var(--radius-sm);
+}
+
+.persona-card__buying-label {
+  font-weight: 700;
+  color: var(--color-primary-blue);
+}
+
+.persona-card__summary {
+  font-size: var(--fs-sm);
+  color: var(--color-text);
+  line-height: var(--lh-base);
+  margin: 0;
+}
+
+/* Modal */
+.personas-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.personas-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 13, 36, 0.55);
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+}
+
+.personas-modal__panel {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: var(--sp-4);
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 2 * var(--sp-4));
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(6, 13, 36, 0.4);
+}
+
+.personas-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-white);
+  flex-shrink: 0;
+}
+
+.personas-modal__header h2 {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-primary-dark);
+}
+
+.personas-modal__close {
+  background: transparent;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  font-size: 28px;
+  line-height: 1;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.personas-modal__close:hover {
+  background: var(--color-section-bg);
+  color: var(--color-text);
+}
+
+.personas-modal__body {
+  padding: var(--sp-4);
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Floating action button */
+.personas-fab {
+  position: fixed;
+  right: var(--sp-4);
+  bottom: var(--sp-4);
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: var(--color-primary-dark);
+  color: var(--color-text-on-dark);
+  border: 2px solid var(--color-accent);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 6px 18px rgba(6, 13, 36, 0.2);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.personas-fab:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(6, 13, 36, 0.28);
+  color: var(--color-accent);
+}
+
+/* When modal is open, lock body scroll */
+body.modal-open {
+  overflow: hidden;
 }
 
 /* =============================================================

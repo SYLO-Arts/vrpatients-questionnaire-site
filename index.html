@@ -16,6 +16,10 @@
     <span class="wordmark">
       <span class="wordmark__vr">VR</span><span class="wordmark__patients">patients</span>
     </span>
+    <button type="button" class="header__personas-btn" id="open-personas" aria-label="Open personas reference">
+      <span aria-hidden="true">&#9776;</span>
+      Personas
+    </button>
   </header>
 
   <!-- Hero — visible only on Section 0 (step 0) -->
@@ -65,6 +69,12 @@
            SECTION 0 — Intro + Role + Exposure Matrix
            ==================================================== -->
       <section class="section" data-step="0" id="section-0">
+        <div class="personas-intro">
+          <h2 class="section__title">Meet the six personas</h2>
+          <p class="section__intro">These are the customer types every question in this form refers to. Skim them now — they'll be one click away (top-right "Personas" button) on every later page if you need to refresh.</p>
+          <div class="personas-grid" data-personas-slot="intro"></div>
+        </div>
+
         <h2 class="section__title">A few quick details</h2>
 
         <!-- S0_01 Name -->
@@ -656,6 +666,93 @@
         <button type="submit" class="btn btn--primary" id="btn-submit" hidden>Submit &amp; book interview</button>
       </div>
     </form>
+
+    <!-- Floating Personas button — visible on Sections 1-4, hidden on Section 0 (intro grid covers it) -->
+    <button type="button" class="personas-fab" id="personas-fab" aria-label="Open personas reference" hidden>
+      <span aria-hidden="true">&#128100;</span>
+      <span>Personas</span>
+    </button>
+
+    <!-- Personas modal -->
+    <div class="personas-modal" id="personas-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="personas-modal-title">
+      <div class="personas-modal__backdrop" data-modal-close></div>
+      <div class="personas-modal__panel" role="document">
+        <header class="personas-modal__header">
+          <h2 id="personas-modal-title">The six personas</h2>
+          <button type="button" class="personas-modal__close" data-modal-close aria-label="Close personas reference">&times;</button>
+        </header>
+        <div class="personas-modal__body">
+          <div class="personas-grid" data-personas-slot="modal"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Persona-card template (cloned into both slots on load) -->
+    <template id="personas-template">
+      <div class="personas-grid__cards">
+
+        <article class="persona-card" data-persona="tasha">
+          <img class="persona-card__img" src="images/persona_tasha.jpg" alt="Illustrated portrait of Tech-Hat Tasha" loading="lazy">
+          <div class="persona-card__body">
+            <h3 class="persona-card__name">Tech-Hat Tasha</h3>
+            <p class="persona-card__role">Scenario Author / Sim-Lab Tech</p>
+            <p class="persona-card__buying"><span class="persona-card__buying-label">Buying role:</span> Heavy User + Influencer; sometimes Buyer in small programs</p>
+            <p class="persona-card__summary">A community-college nursing or small-EMS-program sim coordinator who inherited the lab she runs and wears five other hats. She's the technical evaluator who decides whether VRpatients works on the ground — both the authoring tool and the VR sim itself.</p>
+          </div>
+        </article>
+
+        <article class="persona-card" data-persona="paula">
+          <img class="persona-card__img" src="images/persona_paula.jpg" alt="Illustrated portrait of Pass-Rate Paula" loading="lazy">
+          <div class="persona-card__body">
+            <h3 class="persona-card__name">Pass-Rate Paula</h3>
+            <p class="persona-card__role">Faculty Instructor &mdash; Nursing</p>
+            <p class="persona-card__buying"><span class="persona-card__buying-label">Buying role:</span> User + Influencer; conditional Buyer in small programs</p>
+            <p class="persona-card__summary">A community-college nursing faculty member whose program's NCLEX first-time pass rate publicly determines her standing. She runs the sim lab alone or with one peer and is the single person whose ongoing case-assignment behavior decides whether VRpatients renews.</p>
+          </div>
+        </article>
+
+        <article class="persona-card" data-persona="dale">
+          <img class="persona-card__img" src="images/persona_dale.jpg" alt="Illustrated portrait of Director Dale" loading="lazy">
+          <div class="persona-card__body">
+            <h3 class="persona-card__name">Director Dale</h3>
+            <p class="persona-card__role">Economic Buyer &mdash; EMS / Nursing</p>
+            <p class="persona-card__buying"><span class="persona-card__buying-label">Buying role:</span> Buyer (primary) + Influencer (secondary)</p>
+            <p class="persona-card__summary">An EMS-program or sim-lab director at a community college or municipal training agency who signs the PO when a state grant, accreditation deadline, or aging manikin forces a decision. He has to defend that spend to a board, accreditor, or chief who never saw the demo.</p>
+          </div>
+        </article>
+
+        <article class="persona-card" data-persona="carla">
+          <img class="persona-card__img" src="images/persona_carla.jpg" alt="Illustrated portrait of Care-Plan Carla" loading="lazy">
+          <div class="persona-card__body">
+            <h3 class="persona-card__name">Care-Plan Carla</h3>
+            <p class="persona-card__role">Nursing Student Learner</p>
+            <p class="persona-card__buying"><span class="persona-card__buying-label">Buying role:</span> User only &mdash; zero buying authority</p>
+            <p class="persona-card__summary">A community-college nursing student drowning in care plans, terrified of NCLEX, who never signs a PO. Her course-evaluation comments and first-attempt pass rate are what decide whether VRpatients renews next July.</p>
+          </div>
+        </article>
+
+        <article class="persona-card" data-persona="riley">
+          <img class="persona-card__img" src="images/persona_riley.jpg" alt="Illustrated portrait of Recert-Clock Riley" loading="lazy">
+          <div class="persona-card__body">
+            <h3 class="persona-card__name">Recert-Clock Riley</h3>
+            <p class="persona-card__role">EMS Professional Learner</p>
+            <p class="persona-card__buying"><span class="persona-card__buying-label">Buying role:</span> User + Influencer &mdash; never the buyer</p>
+            <p class="persona-card__summary">A burnt-out, time-starved working EMT or paramedic counting down the 2-year NREMT recert clock who'd rather be sleeping than clicking through one more PowerPoint CE module. The medic in the headset &mdash; not the person who decided VRpatients gets bought.</p>
+          </div>
+        </article>
+
+        <article class="persona-card" data-persona="greg">
+          <img class="persona-card__img" src="images/persona_greg.jpg" alt="Illustrated portrait of Ghosting Greg" loading="lazy">
+          <div class="persona-card__body">
+            <h3 class="persona-card__name">Ghosting Greg</h3>
+            <p class="persona-card__role">Skeptic / Non-Buyer</p>
+            <p class="persona-card__buying"><span class="persona-card__buying-label">Buying role:</span> Buyer or Buyer+Influencer who never became a champion</p>
+            <p class="persona-card__summary">The silent non-buyer in the new-business pipeline &mdash; attends the demo, doesn't argue, and goes dark. He's the modal shape of a lost deal: 42% of tagged new-business losses are "No Response." Probably more a stance than a discrete person.</p>
+          </div>
+        </article>
+
+      </div>
+    </template>
 
     <!-- Confirmation panel (revealed on successful submit) -->
     <section class="confirmation" id="confirmation" hidden aria-live="polite">

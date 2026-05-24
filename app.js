@@ -26,6 +26,47 @@
   const confirmation = document.getElementById('confirmation');
 
   /* -----------------------------------------------------------
+     Personas — inject template into intro + modal slots, wire modal
+     ----------------------------------------------------------- */
+  const personasTemplate = document.getElementById('personas-template');
+  document.querySelectorAll('[data-personas-slot]').forEach(slot => {
+    slot.appendChild(personasTemplate.content.cloneNode(true));
+  });
+
+  const personasModal = document.getElementById('personas-modal');
+  const personasFab = document.getElementById('personas-fab');
+  let lastFocusedBeforeModal = null;
+
+  function openPersonasModal() {
+    lastFocusedBeforeModal = document.activeElement;
+    personasModal.hidden = false;
+    personasModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    // Move focus to close button
+    requestAnimationFrame(() => {
+      personasModal.querySelector('.personas-modal__close')?.focus();
+    });
+  }
+
+  function closePersonasModal() {
+    personasModal.hidden = true;
+    personasModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    if (lastFocusedBeforeModal && typeof lastFocusedBeforeModal.focus === 'function') {
+      lastFocusedBeforeModal.focus();
+    }
+  }
+
+  document.getElementById('open-personas').addEventListener('click', openPersonasModal);
+  personasFab.addEventListener('click', openPersonasModal);
+  document.querySelectorAll('[data-modal-close]').forEach(el => {
+    el.addEventListener('click', closePersonasModal);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !personasModal.hidden) closePersonasModal();
+  });
+
+  /* -----------------------------------------------------------
      URL parameter pre-fill (?name=)
      ----------------------------------------------------------- */
   const params = new URLSearchParams(window.location.search);
@@ -335,6 +376,8 @@
     hero.hidden = stepId !== 0;
     // Progress visible after step 0
     progress.hidden = stepId === 0;
+    // Floating Personas button visible on Sections 1+ (Section 0 has the intro grid)
+    personasFab.hidden = stepId === 0;
 
     // Nav buttons
     btnBack.hidden = idx === 0;
