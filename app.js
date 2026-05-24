@@ -37,7 +37,6 @@
   });
 
   const personasModal = document.getElementById('personas-modal');
-  const personasFab = document.getElementById('personas-fab');
   let lastFocusedBeforeModal = null;
 
   function openPersonasModal() {
@@ -61,7 +60,6 @@
   }
 
   document.getElementById('open-personas').addEventListener('click', openPersonasModal);
-  personasFab.addEventListener('click', openPersonasModal);
   document.querySelectorAll('[data-modal-close]').forEach(el => {
     el.addEventListener('click', closePersonasModal);
   });
@@ -379,8 +377,6 @@
     hero.hidden = stepId !== 0;
     // Progress bar visible from step 0 onward — sets scope expectations early
     progress.hidden = false;
-    // Floating Personas button visible on steps 1+ (step 0 has the intro grid)
-    personasFab.hidden = stepId === 0;
 
     // Nav buttons
     btnBack.hidden = idx === 0;

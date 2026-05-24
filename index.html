@@ -661,19 +661,16 @@
         </fieldset>
       </section>
 
-      <!-- Navigation -->
-      <div class="nav" id="form-nav">
-        <button type="button" class="btn btn--secondary" id="btn-back" hidden>&larr; Back</button>
-        <button type="button" class="btn btn--primary" id="btn-next">Next &rarr;</button>
-        <button type="submit" class="btn btn--primary" id="btn-submit" hidden>Submit &amp; book interview</button>
-      </div>
     </form>
 
-    <!-- Floating Personas button — visible on Sections 1-4, hidden on Section 0 (intro grid covers it) -->
-    <button type="button" class="personas-fab" id="personas-fab" aria-label="Open personas reference" hidden>
-      <span aria-hidden="true">&#128100;</span>
-      <span>Personas</span>
-    </button>
+    <!-- Sticky bottom nav bar (full-width, viewport-pinned) -->
+    <div class="nav-bar" id="nav-bar">
+      <div class="nav" id="form-nav">
+        <button type="button" class="btn btn--secondary" id="btn-back" hidden>&larr; Back</button>
+        <button type="button" class="btn btn--primary" id="btn-next" form="vrp-form">Next &rarr;</button>
+        <button type="submit" class="btn btn--primary" id="btn-submit" form="vrp-form" hidden>Submit &amp; book interview</button>
+      </div>
+    </div>
 
     <!-- Personas modal -->
     <div class="personas-modal" id="personas-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="personas-modal-title">
