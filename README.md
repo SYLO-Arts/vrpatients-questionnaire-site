@@ -67,7 +67,7 @@ Each submission produces fields per the schema in `../L4_QuestionnaireSpec.md` s
 
 - `section2_battery` — `PM` / `SALES` / `CS` / empty (for OTHER)
 - `primary_role_other` — free text if role = OTHER
-- `skipped_questions` — comma-joined list of question IDs skipped via the "Skip this question" button
+- `skipped_questions` — comma-joined list of question IDs skipped via the "Skip (no direct knowledge)" button
 - `pm_skip_alert` — `true` if any PM-battery question was skipped (P0 interview routing flag)
 - `cs_skip_alert` — `true` if any CS-battery question was skipped (P0 interview routing flag)
 - `submitted_at` — ISO-8601 timestamp
