@@ -18,11 +18,11 @@ See `L5_BUILD_PROMPT.md` for the full build spec and `../L4_QuestionnaireSpec.md
 python -m http.server 8765
 ```
 
-Then open `http://localhost:8765/`. Form POSTs return 501 locally (python's server has no POST) — the app's JS handles this and shows the confirmation panel so the UI can still be tested.
+Then open `http://localhost:8765/`. Form POSTs return 501 locally (python's server has no POST). The app's JS catches that and shows the confirmation panel so you can still test the UI.
 
 ## Production setup checklist
 
-Three things to wire up before going live. None require code changes — all configured externally.
+Three things to wire up before going live. None require code changes; all configured externally.
 
 ### 1. Deploy to Netlify
 
@@ -48,11 +48,11 @@ Replace `YOUR-HANDLE/vrp-interview` with your real Calendly event slug. Calendly
 5. Copy the event link (looks like `calendly.com/yourname/vrp-interview`).
 6. Paste it into the `data-url` above and commit.
 
-The query params `hide_event_type_details=1&hide_gdpr_banner=1` give a cleaner inline look — keep them.
+The query params `hide_event_type_details=1&hide_gdpr_banner=1` give a cleaner inline look. Keep them.
 
 ### 3. Slack submission notifications
 
-After the first form submission has been received by Netlify (this is required — Netlify won't show form-config options until at least one submission exists):
+After Netlify receives the first submission (required — Netlify won't show form-config options until at least one submission exists):
 
 1. In Netlify: **Site settings → Forms → Form notifications → Add notification → Outgoing webhook**.
 2. Event: "New form submission".
@@ -67,7 +67,7 @@ Each submission produces fields per the schema in `../L4_QuestionnaireSpec.md` s
 
 - `section2_battery` — `PM` / `SALES` / `CS` / empty (for OTHER)
 - `primary_role_other` — free text if role = OTHER
-- `skipped_questions` — comma-joined list of question IDs skipped via the "Skip — no direct knowledge" button
+- `skipped_questions` — comma-joined list of question IDs skipped via the "Skip this question" button
 - `pm_skip_alert` — `true` if any PM-battery question was skipped (P0 interview routing flag)
 - `cs_skip_alert` — `true` if any CS-battery question was skipped (P0 interview routing flag)
 - `submitted_at` — ISO-8601 timestamp

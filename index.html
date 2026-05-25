@@ -25,8 +25,8 @@
   <!-- Hero — visible only on the "Before you start" intro page (step 0) -->
   <section class="hero" id="hero">
     <div class="hero__inner">
-      <h1 class="hero__title">VRpatients Persona Validation &mdash; <span class="hero__title-accent">Internal Team Input</span></h1>
-      <p class="hero__body">8&ndash;10 minutes. At the end, you'll book a 20-minute follow-up. <strong>Leave a question blank rather than guess</strong> &mdash; use the skip button instead. A confident wrong answer does more damage than a gap we can name.</p>
+      <h1 class="hero__title">VRpatients Persona Validation: <span class="hero__title-accent">Internal Team Input</span></h1>
+      <p class="hero__body">8&ndash;10 minutes, then you'll book a 20-minute follow-up. <strong>If you don't know an answer, skip it.</strong> Don't guess.</p>
     </div>
   </section>
 
@@ -68,7 +68,7 @@
       <section class="section" data-step="0" id="section-0">
         <div class="personas-intro">
           <h2 class="section__title">Meet the six personas</h2>
-          <p class="section__intro">These are the customer types every question in this form refers to. Skim them now &mdash; they'll be one click away (top-right "Personas" button) on every later page if you need to refresh.</p>
+          <p class="section__intro">These are the customer types every question refers to. Skim them now. The Personas button up top brings them back any time.</p>
           <div class="personas-grid" data-personas-slot="intro"></div>
         </div>
       </section>
@@ -107,7 +107,7 @@
         <!-- S0_03 Cross-role -->
         <fieldset class="field" data-qid="S0_03">
           <legend>Do you also have significant direct knowledge relevant to other roles?</legend>
-          <p class="field__help">Check any that apply &mdash; this helps us route your interview. Optional.</p>
+          <p class="field__help">Check any that apply. Helps us route your interview. Optional.</p>
           <ul class="options" id="S0_03-options">
             <li><label class="option"><input type="checkbox" name="S0_03_PM" value="PM" data-cross-role="PM"><span class="option__text">PM &mdash; Product / Engineering</span></label></li>
             <li><label class="option"><input type="checkbox" name="S0_03_SALES" value="SALES" data-cross-role="SALES"><span class="option__text">SALES &mdash; Sales / Business Development</span></label></li>
@@ -235,7 +235,7 @@
            ==================================================== -->
       <section class="section" data-step="2" id="section-2" hidden>
         <h2 class="section__title">Cross-role rankings</h2>
-        <p class="section__intro">All four are required for every respondent regardless of role. ~2 minutes.</p>
+        <p class="section__intro">All four are required, regardless of your role. ~2 minutes.</p>
 
         <!-- S1_01 Forced rank -->
         <fieldset class="field" data-qid="S1_01" id="field-S1_01">
@@ -304,8 +304,8 @@
       <section class="section" data-step="3" id="section-3" hidden>
         <h2 class="section__title">Your role-specific questions</h2>
         <div class="section__intro">
-          <p>The next questions are specific to your role. Answer from direct experience. If a question is outside your knowledge, use the "Skip &mdash; no direct knowledge" button &mdash; don't guess.</p>
-          <p>For text answers: <em>optionally tag your source &mdash; <strong>D</strong> = direct from a customer, <strong>I</strong> = indirect from a colleague, <strong>G</strong> = gut / experience.</em></p>
+          <p>The next questions are specific to your role. Answer from direct experience. If a question is outside your knowledge, skip it. Don't guess.</p>
+          <p>For text answers, you can tag your source: <strong>D</strong> = direct from a customer, <strong>I</strong> = indirect from a colleague, <strong>G</strong> = gut / experience.</p>
         </div>
 
         <!-- ================ SALES BATTERY ================ -->
@@ -383,8 +383,8 @@
               <textarea class="textarea" id="S2_SALES_04_proxy" name="S2_SALES_04_proxy" rows="3" maxlength="200"></textarea>
             </div>
             <div class="skip-row">
-              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
-              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+              <button type="button" class="btn--skip" data-skip-btn>Skip this question</button>
+              <span class="skip-status">Skipped. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
             </div>
           </fieldset>
 
@@ -399,8 +399,8 @@
             </ul>
             <div class="field__error">Please choose one or use the skip button.</div>
             <div class="skip-row">
-              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
-              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+              <button type="button" class="btn--skip" data-skip-btn>Skip this question</button>
+              <span class="skip-status">Skipped. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
             </div>
           </fieldset>
 
@@ -427,8 +427,8 @@
               <textarea class="textarea" id="S2_SALES_06_why" name="S2_SALES_06_why" rows="3" maxlength="200"></textarea>
             </div>
             <div class="skip-row">
-              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
-              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+              <button type="button" class="btn--skip" data-skip-btn>Skip this question</button>
+              <span class="skip-status">Skipped. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
             </div>
           </fieldset>
 
@@ -501,8 +501,8 @@
             </ul>
             <div class="field__error">Please choose one or use the skip button.</div>
             <div class="skip-row">
-              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
-              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+              <button type="button" class="btn--skip" data-skip-btn>Skip this question</button>
+              <span class="skip-status">Skipped. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
             </div>
           </fieldset>
 
@@ -513,8 +513,8 @@
             <textarea class="textarea" name="S2_CS_05" rows="5"></textarea>
             <div class="field__error">Please answer (20+ characters) or use the skip button.</div>
             <div class="skip-row">
-              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
-              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+              <button type="button" class="btn--skip" data-skip-btn>Skip this question</button>
+              <span class="skip-status">Skipped. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
             </div>
           </fieldset>
 
@@ -525,8 +525,8 @@
             <textarea class="textarea" name="S2_CS_06" rows="5"></textarea>
             <div class="field__error">Please answer (20+ characters) or use the skip button.</div>
             <div class="skip-row">
-              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
-              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+              <button type="button" class="btn--skip" data-skip-btn>Skip this question</button>
+              <span class="skip-status">Skipped. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
             </div>
           </fieldset>
 
@@ -577,8 +577,8 @@
             <textarea class="textarea" name="S2_PM_03" rows="5"></textarea>
             <div class="field__error">Please answer (15+ characters) or use the skip button.</div>
             <div class="skip-row">
-              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
-              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+              <button type="button" class="btn--skip" data-skip-btn>Skip this question</button>
+              <span class="skip-status">Skipped. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
             </div>
           </fieldset>
 
@@ -589,8 +589,8 @@
             <textarea class="textarea" name="S2_PM_04" rows="4"></textarea>
             <div class="field__error">Please answer (10+ characters) or use the skip button.</div>
             <div class="skip-row">
-              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
-              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+              <button type="button" class="btn--skip" data-skip-btn>Skip this question</button>
+              <span class="skip-status">Skipped. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
             </div>
           </fieldset>
 
@@ -605,8 +605,8 @@
             </ul>
             <div class="field__error">Please choose one or use the skip button.</div>
             <div class="skip-row">
-              <button type="button" class="btn--skip" data-skip-btn>Skip &mdash; no direct knowledge</button>
-              <span class="skip-status">Skipped &mdash; no direct knowledge. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
+              <button type="button" class="btn--skip" data-skip-btn>Skip this question</button>
+              <span class="skip-status">Skipped. <button type="button" class="btn--undo-skip" data-undo-skip>Undo</button></span>
             </div>
           </fieldset>
 
@@ -618,7 +618,7 @@
            ==================================================== -->
       <section class="section" data-step="4" id="section-4" hidden>
         <h2 class="section__title">Almost done</h2>
-        <p class="section__intro">Two open questions &mdash; the first is the single most valuable thing you can contribute. Write what you know, even if it's fragments.</p>
+        <p class="section__intro">Two more questions. The first one matters most. Write what you know, even if it's fragments.</p>
 
         <fieldset class="field" data-qid="S3_01">
           <legend>What phrases or sentences do customers actually use to describe VRpatients &mdash; positive or negative?</legend>
@@ -638,8 +638,8 @@
            SECTION 4 — Interview booking + submit
            ==================================================== -->
       <section class="section" data-step="5" id="section-5" hidden>
-        <h2 class="section__title">Last step &mdash; book your interview</h2>
-        <p class="section__intro">Based on your answers, we'd like to schedule a 20-minute follow-up. Pick a time below, then hit <strong>Submit</strong> to send your answers.</p>
+        <h2 class="section__title">Last step: book your interview</h2>
+        <p class="section__intro">Pick a time below for a 20-minute follow-up, then hit <strong>Submit</strong> to send your answers.</p>
 
         <!-- Calendly inline embed.
              TODO: replace data-url with your real Calendly event link
@@ -696,7 +696,7 @@
             <h3 class="persona-card__name">Tech-Hat Tasha</h3>
             <p class="persona-card__role">Scenario Author / Sim-Lab Tech</p>
             <p class="persona-card__buying"><span class="persona-card__buying-label">Buying role:</span> Heavy User + Influencer; sometimes Buyer in small programs</p>
-            <p class="persona-card__summary">A community-college nursing or small-EMS-program sim coordinator who inherited the lab she runs and wears five other hats. She's the technical evaluator who decides whether VRpatients works on the ground — both the authoring tool and the VR sim itself.</p>
+            <p class="persona-card__summary">A community-college nursing or small-EMS-program sim coordinator who inherited the lab she runs and wears five other hats. She's the technical evaluator who decides whether VRpatients works on the ground, for both the authoring tool and the VR sim itself.</p>
           </div>
         </article>
 
@@ -736,7 +736,7 @@
             <h3 class="persona-card__name">Recert-Clock Riley</h3>
             <p class="persona-card__role">EMS Professional Learner</p>
             <p class="persona-card__buying"><span class="persona-card__buying-label">Buying role:</span> User + Influencer &mdash; never the buyer</p>
-            <p class="persona-card__summary">A burnt-out, time-starved working EMT or paramedic counting down the 2-year NREMT recert clock who'd rather be sleeping than clicking through one more PowerPoint CE module. The medic in the headset &mdash; not the person who decided VRpatients gets bought.</p>
+            <p class="persona-card__summary">A burnt-out, time-starved working EMT or paramedic counting down the 2-year NREMT recert clock who'd rather be sleeping than clicking through one more PowerPoint CE module. The medic in the headset, not the person who decided VRpatients gets bought.</p>
           </div>
         </article>
 
@@ -746,7 +746,7 @@
             <h3 class="persona-card__name">Ghosting Greg</h3>
             <p class="persona-card__role">Skeptic / Non-Buyer</p>
             <p class="persona-card__buying"><span class="persona-card__buying-label">Buying role:</span> Buyer or Buyer+Influencer who never became a champion</p>
-            <p class="persona-card__summary">The silent non-buyer in the new-business pipeline &mdash; attends the demo, doesn't argue, and goes dark. He's the modal shape of a lost deal: 42% of tagged new-business losses are "No Response." Probably more a stance than a discrete person.</p>
+            <p class="persona-card__summary">The silent non-buyer in the new-business pipeline. Attends the demo, doesn't argue, and goes dark. He's the modal shape of a lost deal: 42% of tagged new-business losses are "No Response." Probably more a stance than a discrete person.</p>
           </div>
         </article>
 
@@ -757,7 +757,7 @@
     <section class="confirmation" id="confirmation" hidden aria-live="polite">
       <span class="confirmation__badge">&#10003; Submitted</span>
       <h2 class="confirmation__title">Thank you.</h2>
-      <p class="confirmation__body">Your answers are recorded. Anthony will reach out to book your 20-minute follow-up based on your availability. If you think of anything else, reply to the original message that sent you here.</p>
+      <p class="confirmation__body">Your answers are in, and your interview is on the calendar. You'll get a confirmation from Calendly. If you think of anything else, reply to the message that sent you here.</p>
       <div class="confirmation__wordmark">
         <span class="wordmark"><span class="wordmark__vr">VR</span><span class="wordmark__patients">patients</span></span>
       </div>
