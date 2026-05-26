@@ -852,12 +852,25 @@ fieldset.field:first-of-type {
   border-radius: var(--radius-lg);
   padding: var(--sp-2);
   box-shadow: 0 1px 2px rgba(6, 13, 36, 0.04);
-  transition: transform 160ms ease, box-shadow 160ms ease;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  /* Cards are <a> tags that open the persona PDF one-pager in a new tab —
+     reset inherited anchor styling so they look identical to the original
+     article-based cards. */
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 
 .persona-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(6, 13, 36, 0.08);
+  border-color: var(--color-accent);
+}
+
+.persona-card:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(118, 185, 0, 0.35), 0 4px 16px rgba(6, 13, 36, 0.08);
 }
 
 .persona-card__img {
