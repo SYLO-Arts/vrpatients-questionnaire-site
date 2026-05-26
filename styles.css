@@ -146,6 +146,14 @@ a {
   gap: var(--sp-3);
 }
 
+.header__logo {
+  display: block;
+  height: 36px;
+  width: auto;
+  /* Logo PNG has transparent BG and uses brand Intervene blue + Stable green,
+     which read well against the dark Onset header. */
+}
+
 .header__personas-btn {
   display: inline-flex;
   align-items: center;
