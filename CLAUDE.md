@@ -41,3 +41,17 @@ The L4 question spec is at `../L4_QuestionnaireSpec.md` — it is the authoritat
 Reference images are at `../../../visual-direction/working/reference-images/` (1–8.png, A–D.png). Study them — especially `4.png` for UI component structure.
 
 **Plan first, then build.** Present a structural plan before writing HTML/CSS/JS.
+
+## Refreshing the persona one-pager PDFs
+
+The 6 persona cards link to PDF one-pagers under `docs/persona-<slug>-<random>.pdf`. PDFs are derived from the themed `.docx` files under `../N_Drafts/` (currently `2_Drafts/`).
+
+To regenerate when Lindsey updates the source `.docx` files:
+
+```
+pip install docx2pdf  # one-time, requires MS Word installed
+python scripts/refresh-persona-pdfs.py             # auto-picks the highest-numbered *_Drafts folder
+python scripts/refresh-persona-pdfs.py ../3_Drafts # or point at a specific folder
+```
+
+The script converts all 6 .docx → PDF with fresh random suffixes, deletes the old PDFs, and patches the 6 hrefs in `index.html` in place. Then commit + push. The random suffixes change every run (old shareable URLs stop working — that's the design).
