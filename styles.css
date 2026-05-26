@@ -150,8 +150,10 @@ a {
   display: block;
   height: 36px;
   width: auto;
-  /* Logo PNG has transparent BG and uses brand Intervene blue + Stable green,
-     which read well against the dark Onset header. */
+  /* Uses the green+white logo variant (vrp-logo-green-white.png) — white
+     wordmark + Stable-green VR icon, designed for dark backgrounds like
+     the Onset header. The blue+green variant (vrp-logo.png) is reserved
+     for light surfaces like the confirmation card. */
 }
 
 .header__personas-btn {
