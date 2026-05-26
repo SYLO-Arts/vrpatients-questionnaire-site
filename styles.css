@@ -176,27 +176,8 @@ a {
   color: var(--color-accent);
 }
 
-.wordmark {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 2px;
-  font-weight: 800;
-  font-size: var(--fs-lg);
-  letter-spacing: -0.01em;
-}
-
-.wordmark__vr {
-  color: var(--color-accent);
-}
-
-.wordmark__patients {
-  color: currentColor;
-  font-weight: 500;
-}
-
-.header .wordmark__patients {
-  color: var(--color-text-on-dark);
-}
+/* (Old text wordmark classes removed 2026-05-25 — header and confirmation
+   card both now use the vrp-logo.png raster from images/.) */
 
 /* =============================================================
    Hero (intro panel, visible on Section 0 only)
@@ -1076,6 +1057,12 @@ body.modal-open {
   margin-top: var(--sp-5);
   padding-top: var(--sp-3);
   border-top: 1px solid var(--color-border);
+}
+
+.confirmation__logo {
+  display: block;
+  height: 42px;
+  width: auto;
 }
 
 /* =============================================================
