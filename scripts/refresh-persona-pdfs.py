@@ -38,7 +38,7 @@ except ImportError:
     sys.exit(1)
 
 # Persona slug -> substring that uniquely identifies its .docx file.
-# When Lindsey updates source filenames, update these substrings if needed.
+# If the source filename convention ever changes, update these substrings.
 PERSONA_MATCHERS = {
     "tasha": "TechHatTasha",
     "dale":  "DirectorDale",

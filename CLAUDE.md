@@ -46,7 +46,7 @@ Reference images are at `../../../visual-direction/working/reference-images/` (1
 
 The 6 persona cards link to PDF one-pagers under `docs/persona-<slug>-<random>.pdf`. PDFs are derived from the themed `.docx` files under `../N_Drafts/` (currently `2_Drafts/`).
 
-To regenerate when Lindsey updates the source `.docx` files:
+To regenerate after editing the source `.docx` files:
 
 ```
 pip install docx2pdf  # one-time, requires MS Word installed
