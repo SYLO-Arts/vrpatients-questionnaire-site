@@ -1,27 +1,43 @@
 /* =============================================================
-   VRpatients Persona Questionnaire — Reef scheme
-   Palette swap = edit :root only.
+   VRpatients Persona Questionnaire — Final palette
+   -------------------------------------------------------------
+   Updated 2026-05-25: was Reef (teal accent). Now uses the
+   locked Final brand palette. See
+   ../../../visual-direction/working/design-options.md for the
+   semantic color names (Onset, Intervene, Drape, Stable,
+   Sterile, Bay) and rationale.
+
+   Mapping from brand-guidelines names to the variable names
+   already used throughout this file:
+     --color-primary-dark = Onset    (#060D24)
+     --color-primary-blue = Intervene (#0052CC)
+     --color-accent       = Stable    (#76B900) — was Reef teal
+     --color-surface      = Bay       (#E4EEF6) — was Reef pale blue
+     --color-white        = Sterile   (#FFFFFF)
+   (Variable names preserved to avoid touching every selector
+   in this 1100+ line file.)
    ============================================================= */
 
 :root {
-  /* Reef scheme */
-  --color-primary-dark: #060d24;
-  --color-primary-blue: #0052cc;
-  --color-accent: #00b8d9;
-  --color-surface: #eaf4ff;
-  --color-white: #ffffff;
+  /* Final palette */
+  --color-primary-dark: #060D24;  /* Onset */
+  --color-primary-blue: #0052CC;  /* Intervene */
+  --color-accent: #76B900;        /* Stable — was #00b8d9 (Reef teal) */
+  --color-surface: #E4EEF6;       /* Bay — was #eaf4ff (Reef pale blue) */
+  --color-white: #ffffff;         /* Sterile */
   --color-amber: #C2410C;
+  --color-blue-powder: #A8CDDF;   /* Drape — added for future use */
 
   /* Derived / UI tokens */
-  --color-text: #060d24;
+  --color-text: #060D24;
   --color-text-secondary: #4a5568;
   --color-text-on-dark: #ffffff;
   --color-text-on-dark-muted: #b8c4d6;
   --color-border: #d1d9e0;
   --color-border-strong: #94a3b8;
   --color-input-bg: #ffffff;
-  --color-section-bg: #eaf4ff;
-  --color-success: #00b8d9;
+  --color-section-bg: #E4EEF6;    /* Bay — was #eaf4ff */
+  --color-success: #76B900;       /* Stable — was #00b8d9 */
   --color-button-primary: #0052cc;
   --color-button-hover: #003d99;
   --color-progress: #0052cc;
@@ -414,7 +430,7 @@ fieldset.field:first-of-type {
 .select:focus {
   border-color: var(--color-primary-blue);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 184, 217, 0.25);
+  box-shadow: 0 0 0 3px rgba(118, 185, 0, 0.25);  /* Stable green focus ring (was teal) */
 }
 
 .textarea {
@@ -1024,7 +1040,7 @@ body.modal-open {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-2);
-  background: rgba(0, 184, 217, 0.12);
+  background: rgba(118, 185, 0, 0.12);  /* Stable green confirmation badge bg (was teal) */
   color: var(--color-accent);
   font-weight: 700;
   font-size: var(--fs-xs);

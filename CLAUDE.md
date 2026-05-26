@@ -10,33 +10,26 @@ Build-specific guidance for the VRpatients persona questionnaire. This is a subf
 
 ## Brand reference — LOCKED DECISIONS
 
-**Color scheme:** `Reef` (teal accent)
+**Color palette:** Final (locked 2026-05-25). Was Reef — retired (competitor color space). See `../../../visual-direction/working/design-options.md` for the canonical palette doc, semantic name meanings, and historical exploration.
 **Font:** Plus Jakarta Sans (Google Fonts CDN)
 **Design system influence:** IBM Carbon Design System (spacing, component patterns, grid philosophy)
 
-All colors use CSS custom properties on `:root` so palette swaps are trivial. See `L5_BUILD_PROMPT.md` for the full token list.
+All colors use CSS custom properties on `:root`. The variable names below were kept from the original Reef build to avoid touching every selector in `styles.css`; the *values* they resolve to are now the Final palette.
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--color-primary-dark` | `#060d24` | Text, headers, dark backgrounds |
-| `--color-primary-blue` | `#0052cc` | Buttons, progress bar, primary CTAs |
-| `--color-accent` | `#00b8d9` | Teal — interactive highlights, badges, completion |
-| `--color-surface` | `#eaf4ff` | Section backgrounds |
-| `--color-amber` | `#C2410C` | Validation errors |
-| `--color-white` | `#ffffff` | Card backgrounds, primary surfaces |
-
-### Other schemes (for future palette swaps)
-
-| Scheme | Accent hex | Surface hex |
-|--------|-----------|------------|
-| `Legacy` | `#0C70AE` / `#6BB544` | white |
-| `Evergreen` | `#76b900` | `#f4f6f8` |
-| `Powder` | `#a8cddf` | `#eef5fa` |
+| Token | Value | Final palette name | Usage |
+|-------|-------|--------------------|-------|
+| `--color-primary-dark` | `#060D24` | **Onset** | Text, headers, dark backgrounds |
+| `--color-primary-blue` | `#0052CC` | **Intervene** | Buttons, progress bar, primary CTAs |
+| `--color-accent` | `#76B900` | **Stable** | Interactive highlights, completion badges, success states |
+| `--color-surface` | `#E4EEF6` | **Bay** | Section backgrounds |
+| `--color-white` | `#FFFFFF` | **Sterile** | Card backgrounds, primary surfaces |
+| `--color-blue-powder` | `#A8CDDF` | **Drape** | Reserved for future soft-secondary use; not yet referenced in `styles.css` |
+| `--color-amber` | `#C2410C` | — | Validation errors (functional, outside brand palette) |
 
 ### Confidence-tag color semantics
 
-- `BEDROCK` → `--color-accent` (teal in Reef)
-- `CRM-BACKED` → `--color-primary-blue`
+- `BEDROCK` → `--color-accent` (now Stable green — semantically aligned: "you got it right")
+- `CRM-BACKED` → `--color-primary-blue` (Intervene)
 - `ASSUMPTION` → `--color-amber`
 
 ## Build instructions
