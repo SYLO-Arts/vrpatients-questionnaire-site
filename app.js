@@ -288,6 +288,7 @@
       pointerId: e.pointerId,
     };
     item.classList.add('is-dragging');
+    document.body.classList.add('rank-dragging'); // hides cursor across page during drag
     item.setPointerCapture(e.pointerId);
   });
 
@@ -317,6 +318,7 @@
   function endDrag(e) {
     if (!drag) return;
     drag.item.classList.remove('is-dragging');
+    document.body.classList.remove('rank-dragging'); // restore cursor visibility
     drag.item.style.transform = '';
     if (drag.item.hasPointerCapture && drag.item.hasPointerCapture(drag.pointerId)) {
       drag.item.releasePointerCapture(drag.pointerId);

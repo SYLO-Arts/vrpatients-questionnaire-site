@@ -633,7 +633,7 @@ fieldset.field:first-of-type {
 }
 
 .rank__item.is-dragging {
-  cursor: grabbing;
+  cursor: none;
   box-shadow: 0 8px 24px rgba(6, 13, 36, 0.18);
   border-color: var(--color-primary-blue);
   background: var(--color-white);
@@ -648,6 +648,18 @@ fieldset.field:first-of-type {
      and the base rule (with transform transition) returns, giving a
      small 80ms settle animation back to translateY(0). */
   transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+/* During an active rank-drag, hide the cursor across the whole page.
+   With 1:1 pointer tracking + pointer capture the cursor will almost
+   always be on the dragged card (which already hides it via .is-dragging
+   above), but fast pointer motion can put the cursor sub-pixel-ahead of
+   the card for a frame, briefly exposing the default cursor on adjacent
+   elements. The body-level rule prevents that flash. !important is
+   required to beat per-element cursor rules (e.g. .rank__item:hover). */
+body.rank-dragging,
+body.rank-dragging * {
+  cursor: none !important;
 }
 
 .rank__item.is-target {
