@@ -638,6 +638,16 @@ fieldset.field:first-of-type {
   border-color: var(--color-primary-blue);
   background: var(--color-white);
   z-index: 2;
+  /* Override base transition to drop `transform` while actively dragging.
+     The JS pointermove handler sets translateY() many times per second;
+     if `transform` is transitioned (80ms ease), the card always lags the
+     cursor and "overshoots" when motion stops. Removing transform from
+     the transition list makes the dragged card track the pointer 1:1.
+     border-color + box-shadow transitions kept so the lift animation
+     when grabbing still feels nice. On release, .is-dragging is removed
+     and the base rule (with transform transition) returns, giving a
+     small 80ms settle animation back to translateY(0). */
+  transition: border-color 120ms ease, box-shadow 120ms ease;
 }
 
 .rank__item.is-target {
