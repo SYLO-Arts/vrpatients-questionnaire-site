@@ -294,10 +294,31 @@
 
   rankList.addEventListener('pointermove', e => {
     if (!drag || e.pointerId !== drag.pointerId) return;
-    const deltaY = e.clientY - drag.startY;
-    drag.item.style.transform = `translateY(${deltaY}px)`;
 
     const items = rankItems();
+    // Clamp the visual transform so the dragged card can't leave the
+    // list area (otherwise it can be flung to the top/bottom of the
+    // browser window even though the swap logic already caps the
+    // targetIndex to [0, items.length - 1]).
+    //
+    // When the cursor goes out-of-bounds, re-anchor drag.startY so that
+    // motion BACK toward the list immediately moves the card 1:1 rather
+    // than sitting frozen until the cursor "catches up" to the bound.
+    // Important now that the cursor is hidden — the user has no visual
+    // reference for how far out-of-bounds they've gone.
+    const minDelta = -drag.startIndex * drag.itemHeight;
+    const maxDelta = (items.length - 1 - drag.startIndex) * drag.itemHeight;
+    let deltaY = e.clientY - drag.startY;
+    if (deltaY < minDelta) {
+      drag.startY = e.clientY - minDelta;
+      deltaY = minDelta;
+    } else if (deltaY > maxDelta) {
+      drag.startY = e.clientY - maxDelta;
+      deltaY = maxDelta;
+    }
+
+    drag.item.style.transform = `translateY(${deltaY}px)`;
+
     const currentIndex = items.indexOf(drag.item);
     const targetIndex = Math.max(
       0,
